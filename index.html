@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NCERT Class 7: Square Root Simulation</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #f0f4f8; padding: 20px; }
+    .card { background: white; max-width: 600px; margin: auto; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    input { padding: 8px; font-size: 16px; width: 100px; text-align: center; }
+    button { padding: 8px 16px; font-size: 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    #grid { display: grid; margin: 20px auto; justify-content: center; gap: 2px; }
+    .cell { width: 25px; height: 25px; background-color: #4CAF50; border-radius: 3px; }
+    .result { font-size: 18px; font-weight: bold; margin-top: 15px; color: #333; }
+    .factors { color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Square Root Visualizer (NCERT)</h2>
+  <p>Enter a perfect square to see its geometric representation and prime factor pairs:</p>
+  
+  <input type="number" id="numberInput" value="16" min="1" max="400">
+  <button onclick="runSimulation()">Visualize</button>
+
+  <div id="grid"></div>
+  <div id="output" class="result"></div>
+  <div id="factorOutput" class="factors"></div>
+</div>
+
+<script>
+function runSimulation() {
+  const num = parseInt(document.getElementById('numberInput').value);
+  const grid = document.getElementById('grid');
+  const output = document.getElementById('output');
+  const factorOutput = document.getElementById('factorOutput');
+  
+  grid.innerHTML = '';
+  const root = Math.sqrt(num);
+
+  if (Number.isInteger(root)) {
+    // Generate Geometric Grid Layout
+    grid.style.gridTemplateColumns = `repeat(${root}, 25px)`;
+    for (let i = 0; i < num; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      grid.appendChild(cell);
+    }
+
+    // Calculate Prime Factorization
+    let factors = getPrimeFactors(num);
+    let pairedFactors = groupFactors(factors);
+
+    output.innerHTML = `√${num} = <strong>${root}</strong> (Grid Side Length: ${root} units)`;
+    factorOutput.innerHTML = `<strong>Prime Factorization:</strong> ${factors.join(' × ')} <br>` +
+                             `<strong>Paired Representation:</strong> (${pairedFactors}) = ${root}`;
+  } else {
+    output.innerHTML = `<span style="color:red;">${num} is not a perfect square. Try numbers like 4, 9, 16, 25, 36, 64, 81, 100...</span>`;
+    factorOutput.innerHTML = '';
+  }
+}
+
+function getPrimeFactors(n) {
+  let factors = [];
+  let divisor = 2;
+  while (n >= 2) {
+    if (n % divisor === 0) {
+      factors.push(divisor);
+      n = n / divisor;
+    } else {
+      divisor++;
+    }
+  }
+  return factors;
+}
+
+function groupFactors(factors) {
+  let pairs = [];
+  for(let i = 0; i < factors.length; i += 2) {
+    pairs.push(`${factors[i]} × ${factors[i+1] || factors[i]}`);
+  }
+  return pairs.join(') × (');
+}
+
+// Initial render
+runSimulation();
+</script>
+
+</body>
+</html>
