@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Square Root Visualizer</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 2rem;
+      text-align: center;
+      background: #ffffff;
+      color: #1e293b;
+    }
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 80px;
+      text-align: center;
+      margin-left: 0.5rem;
+    }
+    .canvas-container {
+      margin: 1.5rem auto;
+      max-width: 400px;
+    }
+    canvas {
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+    .info {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1e40af;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Square Root Visualizer (NCERT Class 7)</h2>
+  <p>Enter a side length to visualize the square area:</p>
+  
+  <label for="sideInput">Side Length: </label>
+  <input type="number" id="sideInput" value="5" min="1" max="12">
+
+  <div class="canvas-container">
+    <canvas id="squareCanvas" width="300" height="250"></canvas>
+  </div>
+
+  <div class="info" id="infoText"></div>
+
+  <script>
+    const canvas = document.getElementById('squareCanvas');
+    const ctx = canvas.getContext('2d');
+    const input = document.getElementById('sideInput');
+    const infoText = document.getElementById('infoText');
+
+    function drawSquare(n) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cellSize = Math.min(200 / n, 30);
+      const startX = (canvas.width - n * cellSize) / 2;
+      const startY = 20;
+
+      ctx.fillStyle = '#3b82f6';
+      ctx.strokeStyle = '#1d4ed8';
+
+      for (let r = 0; r < n; r++) {
+        for (let c = 0; c < n; c++) {
+          ctx.fillRect(startX + c * cellSize, startY + r * cellSize, cellSize - 2, cellSize - 2);
+        }
+      }
+
+      infoText.innerText = `Side = ${n} units  |  Area = ${n} × ${n} = ${n * n} sq units`;
+    }
+
+    input.addEventListener('input', (e) => {
+      let val = parseInt(e.target.value) || 1;
+      if (val > 12) val = 12;
+      drawSquare(val);
+    });
+
+    drawSquare(5);
+  </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Square Root Visualizer</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 2rem;
+      text-align: center;
+      background: #ffffff;
+      color: #1e293b;
+    }
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 80px;
+      text-align: center;
+      margin-left: 0.5rem;
+    }
+    .canvas-container {
+      margin: 1.5rem auto;
+      max-width: 400px;
+    }
+    canvas {
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+    .info {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1e40af;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Square Root Visualizer (NCERT Class 7)</h2>
+  <p>Enter a side length to visualize the square area:</p>
+  
+  <label for="sideInput">Side Length: </label>
+  <input type="number" id="sideInput" value="5" min="1" max="12">
+
+  <div class="canvas-container">
+    <canvas id="squareCanvas" width="300" height="250"></canvas>
+  </div>
+
+  <div class="info" id="infoText"></div>
+
+  <script>
+    const canvas = document.getElementById('squareCanvas');
+    const ctx = canvas.getContext('2d');
+    const input = document.getElementById('sideInput');
+    const infoText = document.getElementById('infoText');
+
+    function drawSquare(n) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cellSize = Math.min(200 / n, 30);
+      const startX = (canvas.width - n * cellSize) / 2;
+      const startY = 20;
+
+      ctx.fillStyle = '#3b82f6';
+      ctx.strokeStyle = '#1d4ed8';
+
+      for (let r = 0; r < n; r++) {
+        for (let c = 0; c < n; c++) {
+          ctx.fillRect(startX + c * cellSize, startY + r * cellSize, cellSize - 2, cellSize - 2);
+        }
+      }
+
+      infoText.innerText = `Side = ${n} units  |  Area = ${n} × ${n} = ${n * n} sq units`;
+    }
+
+    input.addEventListener('input', (e) => {
+      let val = parseInt(e.target.value) || 1;
+      if (val > 12) val = 12;
+      drawSquare(val);
+    });
+
+    drawSquare(5);
+  </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Square Root Visualizer</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 2rem;
+      text-align: center;
+      background: #ffffff;
+      color: #1e293b;
+    }
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 80px;
+      text-align: center;
+      margin-left: 0.5rem;
+    }
+    .canvas-container {
+      margin: 1.5rem auto;
+      max-width: 400px;
+    }
+    canvas {
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+    .info {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1e40af;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Square Root Visualizer (NCERT Class 7)</h2>
+  <p>Enter a side length to visualize the square area:</p>
+  
+  <label for="sideInput">Side Length: </label>
+  <input type="number" id="sideInput" value="5" min="1" max="12">
+
+  <div class="canvas-container">
+    <canvas id="squareCanvas" width="300" height="250"></canvas>
+  </div>
+
+  <div class="info" id="infoText"></div>
+
+  <script>
+    const canvas = document.getElementById('squareCanvas');
+    const ctx = canvas.getContext('2d');
+    const input = document.getElementById('sideInput');
+    const infoText = document.getElementById('infoText');
+
+    function drawSquare(n) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cellSize = Math.min(200 / n, 30);
+      const startX = (canvas.width - n * cellSize) / 2;
+      const startY = 20;
+
+      ctx.fillStyle = '#3b82f6';
+      ctx.strokeStyle = '#1d4ed8';
+
+      for (let r = 0; r < n; r++) {
+        for (let c = 0; c < n; c++) {
+          ctx.fillRect(startX + c * cellSize, startY + r * cellSize, cellSize - 2, cellSize - 2);
+        }
+      }
+
+      infoText.innerText = `Side = ${n} units  |  Area = ${n} × ${n} = ${n * n} sq units`;
+    }
+
+    input.addEventListener('input', (e) => {
+      let val = parseInt(e.target.value) || 1;
+      if (val > 12) val = 12;
+      drawSquare(val);
+    });
+
+    drawSquare(5);
+  </script>
+
+</body>
+</html>
