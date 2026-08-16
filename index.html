@@ -1,91 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>NCERT Class 7: Square Root Simulation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class 7 Mathematics Lab | Bellwether International School</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #f0f4f8; padding: 20px; }
-    .card { background: white; max-width: 600px; margin: auto; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    input { padding: 8px; font-size: 16px; width: 100px; text-align: center; }
-    button { padding: 8px 16px; font-size: 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #0056b3; }
-    #grid { display: grid; margin: 20px auto; justify-content: center; gap: 2px; }
-    .cell { width: 25px; height: 25px; background-color: #4CAF50; border-radius: 3px; }
-    .result { font-size: 18px; font-weight: bold; margin-top: 15px; color: #333; }
-    .factors { color: #555; margin-top: 5px; }
+    :root {
+      --primary: #1e40af;
+      --primary-dark: #1e3a8a;
+      --secondary: #0284c7;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --accent: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    /* Top Branding Bar */
+    .top-bar {
+      background: var(--primary-dark);
+      color: white;
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .branding {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-badge {
+      background: #3b82f6;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .phone-link {
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 2.5rem 2rem;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero-container { grid-template-columns: 1fr; }
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pinned-note {
+      background: rgba(255, 255, 255, 0.15);
+      border-left: 4px solid #f59e0b;
+      padding: 1rem;
+      border-radius: 4px;
+      backdrop-filter: blur(5px);
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Progress Tracker Card */
+    .tracker-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .progress-percent {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      min-width: 70px;
+    }
+
+    .progress-bar-bg {
+      flex: 1;
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 25%;
+      background: var(--accent);
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.6rem 1.2rem;
+      border: 1px solid #cbd5e1;
+      background: white;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Simulation Grid */
+    .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .sim-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sim-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-preview {
+      height: 160px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #e2e8f0;
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chapter-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+
+    .sim-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .sim-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    .launch-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .launch-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      width: 90%;
+      max-width: 900px;
+      height: 80vh;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      padding: 1rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      flex: 1;
+      background: #f1f5f9;
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+    }
+
+    footer strong {
+      color: white;
+    }
   </style>
 </head>
 <body>
 
-<div class="card">
-  <h2>Square Root Visualizer (NCERT)</h2>
-  <p>Enter a perfect square to see its geometric representation and prime factor pairs:</p>
-  
-  <input type="number" id="numberInput" value="16" min="1" max="400">
-  <button onclick="runSimulation()">Visualize</button>
+  <!-- Top Branding Header -->
+  <div class="top-bar">
+    <div class="branding">
+      <div class="logo-badge">BIS</div>
+      <div>
+        <strong>Bellwether International School</strong><br/>
+        <span style="font-size: 0.8rem; color: #cbd5e1;">Interactive Mathematics Portal</span>
+      </div>
+    </div>
+    <div class="profile-info">
+      <div>
+        <strong>Achanta Ramaseeta</strong><br/>
+        <span>Faculty Member</span>
+      </div>
+      <div>📞 <a href="tel:8341175424" class="phone-link">8341175424</a></div>
+    </div>
+  </div>
 
-  <div id="grid"></div>
-  <div id="output" class="result"></div>
-  <div id="factorOutput" class="factors"></div>
-</div>
+  <!-- Main Hero Banner -->
+  <section class="hero">
+    <div class="hero-container">
+      <div>
+        <h1>Class 7 Mathematics Lab</h1>
+        <p>Dive into visual, interactive simulations fully mapped to the NCERT & CBSE curriculum. Manipulate figures, explore numeric models, and master core mathematical concepts.</p>
+      </div>
+      <div class="pinned-note">
+        <strong>📌 Pinned Note</strong>
+        <p style="font-size: 0.85rem; margin-top: 0.25rem;">Designed for students following the NCERT/CBSE Class 7 Mathematics syllabus.</p>
+      </div>
+    </div>
+  </section>
 
-<script>
-function runSimulation() {
-  const num = parseInt(document.getElementById('numberInput').value);
-  const grid = document.getElementById('grid');
-  const output = document.getElementById('output');
-  const factorOutput = document.getElementById('factorOutput');
-  
-  grid.innerHTML = '';
-  const root = Math.sqrt(num);
+  <!-- Main Content Area -->
+  <div class="main-container">
+    
+    <!-- Learning Progress Bar -->
+    <div class="tracker-card">
+      <div class="progress-percent" id="percentText">25%</div>
+      <div style="flex: 1;">
+        <h3 style="font-size: 1.1rem; margin-bottom: 0.25rem;">Your Learning Progress</h3>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem;">
+          <span id="completedCount">1</span> of 4 Simulations Completed
+        </p>
+      </div>
+    </div>
 
-  if (Number.isInteger(root)) {
-    // Generate Geometric Grid Layout
-    grid.style.gridTemplateColumns = `repeat(${root}, 25px)`;
-    for (let i = 0; i < num; i++) {
-      const cell = document.createElement('div');
-      cell.className = 'cell';
-      grid.appendChild(cell);
+    <!-- Chapter Filter Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active">All Chapters</button>
+      <button class="tab-btn">Chapter 1: Integers</button>
+      <button class="tab-btn">Chapter 2: Fractions & Decimals</button>
+      <button class="tab-btn">Chapter 6: Triangles & Its Properties</button>
+      <button class="tab-btn">Chapter 12: Algebraic Expressions</button>
+    </nav>
+
+    <!-- Simulation Cards Grid -->
+    <main class="sim-grid">
+      
+      <!-- Card 1 -->
+      <div class="sim-card">
+        <div class="card-preview">Square Root Visualizer</div>
+        <div class="card-body">
+          <div class="chapter-tag">NCERT Chapter 6</div>
+          <h3>Square Roots & Area Models</h3>
+          <p>Explore perfect squares, grid visual representations, and prime factor pairs.</p>
+          <button class="launch-btn" onclick="openSim('Square Root Visualizer', 'square_root_sim.html')">Launch Simulation</button>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="sim-card">
+        <div class="card-preview">Integer Number Line</div>
+        <div class="card-body">
+          <div class="chapter-tag">NCERT Chapter 1</div>
+          <h3>Operations on Integers</h3>
+          <p>Interactive visual line demonstrating addition and subtraction of positive and negative integers.</p>
+          <button class="launch-btn" onclick="openSim('Integer Operations', 'integer_sim.html')">Launch Simulation</button>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="sim-card">
+        <div class="card-preview">Triangle Property Explorer</div>
+        <div class="card-body">
+          <div class="chapter-tag">NCERT Chapter 6</div>
+          <h3>Angle Sum & Exterior Angles</h3>
+          <p>Drag triangle vertices to prove that interior angles always sum up to 180 degrees.</p>
+          <button class="launch-btn" onclick="openSim('Angle Sum Property', 'triangle_sim.html')">Launch Simulation</button>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="sim-card">
+        <div class="card-preview">Fraction Multiplication</div>
+        <div class="card-body">
+          <div class="chapter-tag">NCERT Chapter 2</div>
+          <h3>Fraction Area Visualizer</h3>
+          <p>Overlap horizontal and vertical fraction grids to see how fraction multiplication works.</p>
+          <button class="launch-btn" onclick="openSim('Fraction Multiplication', 'fraction_sim.html')">Launch Simulation</button>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Simulation Modal Window -->
+  <div class="modal-overlay" id="simModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Simulation Title</h3>
+        <button class="close-btn" onclick="closeSim()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="simFrame" src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Bellwether International School — Class 7 Interactive Math Lab © 2026</p>
+    <p style="margin-top: 0.5rem;">Maintained by: <strong>Achanta Ramaseeta</strong> | NCERT & CBSE Curriculum</p>
+  </footer>
+
+  <script>
+    function openSim(title, url) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('simFrame').src = url;
+      document.getElementById('simModal').style.display = 'flex';
     }
 
-    // Calculate Prime Factorization
-    let factors = getPrimeFactors(num);
-    let pairedFactors = groupFactors(factors);
-
-    output.innerHTML = `√${num} = <strong>${root}</strong> (Grid Side Length: ${root} units)`;
-    factorOutput.innerHTML = `<strong>Prime Factorization:</strong> ${factors.join(' × ')} <br>` +
-                             `<strong>Paired Representation:</strong> (${pairedFactors}) = ${root}`;
-  } else {
-    output.innerHTML = `<span style="color:red;">${num} is not a perfect square. Try numbers like 4, 9, 16, 25, 36, 64, 81, 100...</span>`;
-    factorOutput.innerHTML = '';
-  }
-}
-
-function getPrimeFactors(n) {
-  let factors = [];
-  let divisor = 2;
-  while (n >= 2) {
-    if (n % divisor === 0) {
-      factors.push(divisor);
-      n = n / divisor;
-    } else {
-      divisor++;
+    function closeSim() {
+      document.getElementById('simModal').style.display = 'none';
+      document.getElementById('simFrame').src = 'about:blank';
     }
-  }
-  return factors;
-}
 
-function groupFactors(factors) {
-  let pairs = [];
-  for(let i = 0; i < factors.length; i += 2) {
-    pairs.push(`${factors[i]} × ${factors[i+1] || factors[i]}`);
-  }
-  return pairs.join(') × (');
-}
-
-// Initial render
-runSimulation();
-</script>
+    window.onclick = function(event) {
+      const modal = document.getElementById('simModal');
+      if (event.target === modal) {
+        closeSim();
+      }
+    };
+  </script>
 
 </body>
 </html>
